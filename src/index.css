@@ -29,36 +29,76 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
+  --webkit-tap-highlight-color: transparent;
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+canvas{
+  width: 100vw!important;
+  height: 75vh!important;
+}
+@keyframes FadeIn{
+  0% {
+    opacity: 0;
+  }50% {
+    opacity: 1;
+  }100%{
+    opacity: 0;
+  }
+}
+.loading-container{
+  position: absolute; /* Pour placer le bouton en haut niveau de la page */
+  top: 50%; /* Ajuste cette valeur pour positionner le bouton plus bas ou plus haut */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Pour centrer le bouton horizontalement */
+  z-index: 1;
+  height: 300px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: FadeIn 1.2s forwards;
+}
+.container-btn {
+  position: absolute; /* Pour placer le bouton en haut niveau de la page */
+  bottom: 150px; /* Ajuste cette valeur pour positionner le bouton plus bas ou plus haut */
+  left: 50%;
+  transform: translateX(-50%); /* Pour centrer le bouton horizontalement */
+  z-index: 1; /* Pour s'assurer que le bouton est au-dessus du canvas */
+  display: flex;
+  gap: 0.5rem;
+}
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  z-index: 2; /* S'assurer que le bouton est au-dessus du canvas */
+  background: linear-gradient(#4CC9F0, #4361EE, #3A0CA3);
+  box-shadow: 0px 0px 43px 16px rgba(0,0,0,0.1);
+  --webkit-tap-highlight-color: transparent;
+  outline: none; 
 }
-button:hover {
-  border-color: #646cff;
+button:hover{
+  opacity: 0.7;
+  transition: opacity 0.3s;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:focus{
+  outline: none;
+  border: none;
 }
-canvas{
-  width: 100vw;
-  height: 100vh;
+svg{
+  height: 1.5em;
+  width: 1.5em;
 }
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -67,7 +107,14 @@ canvas{
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
+}
+@media(max-width: 403px){
+  canvas{
+    height: 65vh!important;
+  }
+}
+@media(max-width: 350px){
+  canvas{
+    height: 50vh!important;
   }
 }

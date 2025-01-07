@@ -1,48 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Frame from './Frame';
-import * as THREE from 'three';
+import nuit from './assets/nuit_etoilee.webp';
+import amandiers from './assets/amandiers.jpeg'
+import autoportrait from './assets/autoportrait.jpeg'
+import champs from './assets/champs.jpeg'
+import { FiRefreshCw } from "react-icons/fi";
 
+// Composant principal
 const App = () => {
-  const [textureURL, setTextureURL] = useState('');
+  const [textureURL, setTextureURL] = useState(nuit); // Texture par défaut
 
-  useEffect(() => {
-    // Créer une texture sur un canvas (par exemple, Van Gogh Night Sky)
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const width = 512;
-    const height = 300;
-    canvas.width = width;
-    canvas.height = height;
-
-    const gradient = ctx.createLinearGradient(0, 0, 0, height);
-    gradient.addColorStop(0, "#4CC9F0");
-    gradient.addColorStop(0.5, "#4361EE");
-    gradient.addColorStop(1, "#7209B7");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    // Création de la texture
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-
-    // Crée une URL temporaire à partir de la texture
-    const textureURL = canvas.toDataURL();
-
-    // Met à jour l'URL de la texture
-    setTextureURL(textureURL);
-  }, []);
+  // Fonction pour changer la texture
+  const handleChangeTexture = (url) => {
+    setTextureURL(url);
+  };
 
   return (
-    <Canvas>
-      <OrbitControls />
-      {/* Lumières très fortes et blanches */}
-      <directionalLight position={[5, 5, 5]} intensity={1.5} color="white" />
-      <ambientLight intensity={1.0} color="white" />
-      <pointLight position={[0, 5, 0]} intensity={2.0} color="white" />
-      {textureURL && <Frame textureURL={textureURL} />}
-    </Canvas>
+    <>
+      {/* Canvas 3D */}
+      <Canvas>
+        <OrbitControls minDistance={3} maxDistance={4} /> 
+        <directionalLight position={[5, 5, 5]} intensity={1.5} color="white" />
+        <ambientLight intensity={3.0} color="white" />
+        <pointLight position={[0, 5, 0]} intensity={2.0} color="white" />
+        {textureURL && <Frame textureURL={textureURL} />}
+      </Canvas>
+
+      {/* Conteneur des boutons */}
+      <div className="container-btn">
+        <button onClick={() => handleChangeTexture(nuit)}>La nuit étoilée</button>
+        <button onClick={() => handleChangeTexture(amandiers)}>Amandier en fleurs</button>
+        <button onClick={() => handleChangeTexture(autoportrait)}>Autoportrait</button>
+        <button onClick={() => handleChangeTexture(champs)}>Champ de blé aux corbeaux</button>
+      </div>
+    </>
   );
 };
 
