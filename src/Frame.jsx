@@ -4,6 +4,7 @@ import * as THREE from 'three';
 
 export default function Frame({ textureURL, ...props }) {
   const { nodes, materials } = useGLTF('/frame.glb');
+  
   const texture = useTexture(textureURL);  // Charge la texture à partir de l'URL donnée
 
   // Ajuste les dimensions de la texture
